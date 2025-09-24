@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puvi Jal - Groundwater Portal</title>
+
+  <!-- Embedded CSS -->
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; line-height: 1.6; }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #004aad;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+    header .logo { font-size: 1.8rem; font-weight: bold; }
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: bold;
+    }
+    header nav a:hover { text-decoration: underline; }
+
+    /* Hero Section with background image */
+    .hero {
+      height: 100vh;
+      background: url("assets/water_bg.jpg") no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 0 2rem;
+      position: relative;
+    }
+    /* Dark overlay for readability */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 70, 0.5);
+      z-index: 1;
+    }
+    .hero h1, .hero p, .hero .btn {
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
+    .hero .btn {
+      background: white;
+      color: #004aad;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .hero .btn:hover { background: #e6e6e6; }
+
+    /* Recommendations Section */
+    .scroll-section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #f4f8fb;
+    }
+    .scroll-section h2 { margin-bottom: 2rem; font-size: 2rem; color: #004aad; }
+    .scroll-cards {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      padding-bottom: 1rem;
+    }
+    .scroll-cards::-webkit-scrollbar { height: 8px; }
+    .scroll-cards::-webkit-scrollbar-thumb { background: #007bff; border-radius: 4px; }
+    .card {
+      flex: 0 0 250px;
+      background: #007bff;
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .card:hover { transform: translateY(-5px); }
+
+    /* Dashboard Section */
+    .dashboard {
+      padding: 4rem 2rem;
+      background: #ffffff;
+      text-align: center;
+    }
+    .dashboard h2 {
+      font-size: 2rem;
+      color: #004aad;
+      margin-bottom: 1rem;
+    }
+    .dashboard p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #333;
+    }
+    .dashboard-img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .dashboard-img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      background: #004aad;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .scroll-cards { gap: 0.8rem; }
+      .card { flex: 0 0 200px; padding: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="logo">Puvi Jal</div>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#recommendations">Recommendations</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="signin.html">Sign In</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section with background -->
+  <section class="hero" id="hero">
+    <h1>Puvi Jal</h1>
+    <p>Real-time groundwater analysis, intelligent queries, and predictive insights.</p>
+    <a href="signin.html" class="btn">Get Started</a>
+  </section>
+
+  <!-- Recommendations / Preferences -->
+  <section class="scroll-section" id="recommendations">
+    <h2>Our Recommendations</h2>
+    <div class="scroll-cards">
+      <div class="card">💧 Water Conservation Tips</div>
+      <div class="card">📊 Regional Groundwater Trends</div>
+      <div class="card">🌱 Sustainable Agriculture Practices</div>
+      <div class="card">🔮 Future Water Level Predictions</div>
+      <div class="card">🛰️ Satellite-Based Data Insights</div>
+    </div>
+  </section>
+
+  <!-- Dashboard Section -->
+  <section class="dashboard" id="dashboard">
+    <h2>Groundwater Dashboard</h2>
+    <p>Track water levels, monitor regions, and explore AI-powered predictions.</p>
+    <img src="assets/dashboard.png" alt="Dashboard Preview" class="dashboard-img">
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    Developed by <b>Neura Coders</b> © 2025
+  </footer>
+
+</body>
+</html>
