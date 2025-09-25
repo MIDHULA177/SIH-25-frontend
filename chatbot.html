@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History ChatGPT-like Chatbot</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+    body { height: 100vh; display: flex; background: #f5f7fa; }
+
+    /* Left panel - chat history */
+    .chat-history {
+      width: 250px;
+      background: #1f2937;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .chat-history h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #fbbf24;
+    }
+
+    .history-item {
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .history-item:hover {
+      background: #374151;
+    }
+
+    /* Right panel - active chat */
+    .chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background: #004aad;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .message {
+      padding: 0.8rem 1.2rem;
+      border-radius: 20px;
+      max-width: 70%;
+      word-wrap: break-word;
+    }
+
+    .message.user { background: #007bff; color: white; align-self: flex-end; }
+    .message.bot { background: #e4e6eb; color: #333; align-self: flex-start; }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .chat-input button {
+      background: #004aad;
+      color: white;
+      border: none;
+      padding: 0 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .chat-input button:hover { background: #003080; }
+
+    @media(max-width:768px){
+      body { flex-direction: column; }
+      .chat-history { width: 100%; height: 150px; flex-direction: row; overflow-x: auto; }
+      .history-item { margin-right: 0.5rem; }
+      .chat-area { flex: 1; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Left Panel - Chat History -->
+  <div class="chat-history">
+    <h2>Chats History</h2>
+    <div class="history-item" onclick="loadChat('Chat 1')">Chat 1</div>
+    <div class="history-item" onclick="loadChat('Chat 2')">Chat 2</div>
+    <div class="history-item" onclick="loadChat('Chat 3')">Chat 3</div>
+  </div>
+
+  <!-- Right Panel - Active Chat -->
+  <div class="chat-area">
+    <div class="chat-header">Puvi Jal AI Companion</div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message bot">Hello! Ask me anything about history.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type your question...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if(!text) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.classList.add('message','user');
+      userMsg.textContent = text;
+      chatMessages.appendChild(userMsg);
+
+      userInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // Bot response
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.classList.add('message','bot');
+        let response = "I can provide general history information.";
+        const lower = text.toLowerCase();
+        if(lower.includes("egypt")) response = "Ancient Egypt was known for pyramids and pharaohs.";
+        if(lower.includes("rome")) response = "The Roman Empire was one of the most powerful in ancient history.";
+        if(lower.includes("india")) response = "India has a rich history with empires like Maurya and Mughal.";
+        botMsg.textContent = response;
+        chatMessages.appendChild(botMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 700);
+    }
+
+    userInput.addEventListener('keypress', (e) => {
+      if(e.key === "Enter") sendMessage();
+    });
+
+    function loadChat(name) {
+      chatMessages.innerHTML = '';
+      const botMsg = document.createElement('div');
+      botMsg.classList.add('message','bot');
+      botMsg.textContent = `${name} loaded. Ask a question about history!`;
+      chatMessages.appendChild(botMsg);
+    }
+  </script>
+
+</body>
+</html>
