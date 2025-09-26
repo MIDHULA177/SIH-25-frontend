@@ -8,9 +8,6 @@
   <title>Groundwater Predictions - Puvi Jal</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Waterfall&display=swap" rel="stylesheet">
   <style>
     /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,18 +39,13 @@
       backdrop-filter: blur(10px);
     }
     header .logo { 
-      font-family: "Waterfall", cursive;
-      font-size: 2.5rem; 
+      font-size: 2rem; 
       font-weight: 700; 
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-    header .logo .logo-img { 
-  height: 35px; /* Adjust the height as needed */
-  width: auto;
-  margin-right: 5px; /* Add some space between the image and the text */
-}
+    header .logo i { color: #00BFFF; }
     header nav { display: flex; }
     header nav a { 
       color: white; 
@@ -65,13 +57,13 @@
       border-radius: 5px;
     }
     header nav a:hover { 
-      color: #edf0f2; 
-      background: rgba(144, 229, 248, 0.681);
+      color: #00BFFF; 
+      background: rgba(255,255,255,0.1);
       text-decoration: none;
     }
     header nav a.active { 
-      background: rgb(96, 205, 238); 
-      color: #e1e9ec;
+      background: rgba(255,255,255,0.2); 
+      color: #00BFFF;
     }
 
     /* Hero Section */
@@ -396,7 +388,8 @@
   <!-- Navbar -->
   <header id="navbar">
     <div class="logo">
-      <img src="assets/dashboard1.jpg" alt="Puvi Jal Logo" class="logo-img"> Puvi Jal
+      <i class="fas fa-tint"></i>
+      Puvi Jal
     </div>
     <nav>
       <a href="index.html">Home</a>
@@ -430,7 +423,7 @@
           <li><i class="fas fa-check-circle"></i> Provide actionable insights for agriculture and urban planning</li>
         </ul>
       </div>
-      <img src="assets/prediction-chart.jpg" alt="Sample groundwater prediction chart" class="intro-img">
+      <img src="assets/db_1.jpg" alt="Sample groundwater prediction chart" class="intro-img">
       <!-- Placeholder: Replace with actual image -->
     </div>
   </section>
@@ -470,4 +463,10 @@
         <div class="mock-chart">
           <strong>Trend:</strong> ↓ Declining<br>
           <strong>Confidence:</strong> 85%<br>
-          <strong>Next
+          <strong>Next</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
