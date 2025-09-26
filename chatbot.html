@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>History ChatGPT-like Chatbot</title>
+  <title>Puvi Jal AI Chatbot</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
     body { height: 100vh; display: flex; background: #f5f7fa; }
 
-    /* Left panel - chat history */
+    /* Left Panel */
     .chat-history {
       width: 250px;
       background: #1f2937;
@@ -18,158 +18,174 @@
       padding: 1rem;
       overflow-y: auto;
     }
-
-    .chat-history h2 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #fbbf24;
-    }
-
-    .history-item {
+    .chat-history h2 { font-size: 1.2rem; margin-bottom: 1rem; color: #fbbf24; }
+    .history-item, .new-chat-btn {
       padding: 0.5rem;
       margin-bottom: 0.5rem;
       border-radius: 8px;
       cursor: pointer;
       transition: background 0.2s;
     }
+    .history-item:hover, .new-chat-btn:hover { background: #374151; }
 
-    .history-item:hover {
-      background: #374151;
-    }
-
-    /* Right panel - active chat */
-    .chat-area {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat-header {
-      background: #004aad;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .chat-messages {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .message {
-      padding: 0.8rem 1.2rem;
-      border-radius: 20px;
-      max-width: 70%;
-      word-wrap: break-word;
-    }
-
+    /* Right Panel */
+    .chat-area { flex: 1; display: flex; flex-direction: column; }
+    .chat-header { background: #004aad; color: white; padding: 1rem; text-align: center; font-size: 1.2rem; font-weight: bold; }
+    .chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; scroll-behavior: smooth; }
+    .message { padding: 0.8rem 1.2rem; border-radius: 20px; max-width: 70%; word-wrap: break-word; }
     .message.user { background: #007bff; color: white; align-self: flex-end; }
-    .message.bot { background: #e4e6eb; color: #333; align-self: flex-start; }
+    .message.bot { background: #e4e6eb; color: #333; align-self: flex-start; font-weight: 500; }
 
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #ccc;
-    }
-
-    .chat-input input {
-      flex: 1;
-      padding: 0.8rem 1rem;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    .chat-input button {
-      background: #004aad;
-      color: white;
-      border: none;
-      padding: 0 1.5rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
+    .chat-input { display: flex; flex-direction: column; border-top: 1px solid #ccc; padding: 0.5rem; }
+    .chat-input-row { display: flex; }
+    .chat-input input { flex: 1; padding: 0.8rem 1rem; border: none; outline: none; font-size: 1rem; border-radius: 8px; }
+    .chat-input button { background: #004aad; color: white; border: none; padding: 0 1.5rem; margin-left: 0.5rem; cursor: pointer; border-radius: 8px; transition: background 0.3s; }
     .chat-input button:hover { background: #003080; }
+    .suggestions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .suggestion-btn { background: #fbbf24; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+    .suggestion-btn:hover { background: #f59e0b; }
 
     @media(max-width:768px){
       body { flex-direction: column; }
       .chat-history { width: 100%; height: 150px; flex-direction: row; overflow-x: auto; }
-      .history-item { margin-right: 0.5rem; }
+      .history-item { margin-right: 0.5rem; margin-bottom: 0; }
       .chat-area { flex: 1; }
     }
-
   </style>
 </head>
 <body>
 
-  <!-- Left Panel - Chat History -->
+  <!-- Left Panel -->
   <div class="chat-history">
     <h2>Chats History</h2>
-    <div class="history-item" onclick="loadChat('Chat 1')">Chat 1</div>
-    <div class="history-item" onclick="loadChat('Chat 2')">Chat 2</div>
-    <div class="history-item" onclick="loadChat('Chat 3')">Chat 3</div>
+    <div class="new-chat-btn" onclick="createNewChat()">+ New Chat</div>
+    <div id="history-list"></div>
   </div>
 
-  <!-- Right Panel - Active Chat -->
+  <!-- Right Panel -->
   <div class="chat-area">
     <div class="chat-header">Puvi Jal AI Companion</div>
-    <div class="chat-messages" id="chat-messages">
-      <div class="message bot">Hello! Ask me anything about history.</div>
-    </div>
+    <div class="chat-messages" id="chat-messages"></div>
     <div class="chat-input">
-      <input type="text" id="user-input" placeholder="Type your question...">
-      <button onclick="sendMessage()">Send</button>
+      <div class="chat-input-row">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+      <div class="suggestions">
+    
+        <button class="suggestion-btn" onclick="quickQuestion('Tell me about India')">India</button>
+        <button class="suggestion-btn" onclick="quickQuestion('Tell me about groundwater')">Groundwater</button>
+        <button class="suggestion-btn" onclick="quickQuestion('Tell me about water quality')">Water Quality</button>
+        <button class="suggestion-btn" onclick="quickQuestion('Tell me about Ganga river')">Ganga River</button>
+      </div>
     </div>
   </div>
 
   <script>
     const chatMessages = document.getElementById('chat-messages');
     const userInput = document.getElementById('user-input');
+    const historyList = document.getElementById('history-list');
+
+    let chats = JSON.parse(localStorage.getItem('chats')) || {};
+    let currentChat = Object.keys(chats)[0] || "Chat 1";
+
+    function saveChats() {
+      localStorage.setItem('chats', JSON.stringify(chats));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      historyList.innerHTML = '';
+      for (let chat in chats) {
+        const div = document.createElement('div');
+        div.classList.add('history-item');
+        div.textContent = chat;
+        div.onclick = () => loadChat(chat);
+        historyList.appendChild(div);
+      }
+    }
+
+    function loadChat(name) {
+      currentChat = name;
+      chatMessages.innerHTML = '';
+      if(chats[name]) {
+        chats[name].forEach(msg => appendMessage(msg.sender, msg.text, false));
+      } else {
+        chats[name] = [];
+        saveChats();
+      }
+    }
+
+    function appendMessage(sender, text, save = true) {
+      const msg = document.createElement('div');
+      msg.classList.add('message', sender);
+      msg.textContent = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      if(save) {
+        chats[currentChat].push({sender,text});
+        saveChats();
+      }
+    }
 
     function sendMessage() {
       const text = userInput.value.trim();
       if(!text) return;
-
-      const userMsg = document.createElement('div');
-      userMsg.classList.add('message','user');
-      userMsg.textContent = text;
-      chatMessages.appendChild(userMsg);
-
+      appendMessage('user', text);
       userInput.value = '';
+
+      // Typing indicator
+      const typing = document.createElement('div');
+      typing.classList.add('message','bot');
+      typing.textContent = 'Bot is typing...';
+      chatMessages.appendChild(typing);
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
-      // Bot response
       setTimeout(() => {
-        const botMsg = document.createElement('div');
-        botMsg.classList.add('message','bot');
-        let response = "I can provide general history information.";
+        typing.remove();
+        let response = "I can provide information on history or groundwater.";
         const lower = text.toLowerCase();
+
+        // History
         if(lower.includes("egypt")) response = "Ancient Egypt was known for pyramids and pharaohs.";
-        if(lower.includes("rome")) response = "The Roman Empire was one of the most powerful in ancient history.";
-        if(lower.includes("india")) response = "India has a rich history with empires like Maurya and Mughal.";
-        botMsg.textContent = response;
-        chatMessages.appendChild(botMsg);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 700);
+        else if(lower.includes("rome")) response = "The Roman Empire was one of the most powerful in ancient history.";
+        else if(lower.includes("india")) response = "India has a rich history with empires like Maurya and Mughal.";
+
+        // Groundwater
+        else if(lower.includes("groundwater")) response = "Groundwater is water found underground in aquifers. It is crucial for drinking, irrigation, and ecosystems.";
+        else if(lower.includes("water quality")) response = "Water quality includes physical, chemical, and biological characteristics of water. It affects human and ecosystem health.";
+        else if(lower.includes("ganga")) response = "The Ganga river basin is a major source of groundwater in India. Pollution and overuse affect water quality.";
+        else if(lower.includes("aquifer")) response = "Aquifers are underground layers of water-bearing rock. They store and transmit groundwater.";
+        else if(lower.includes("well")) response = "Wells are dug to access groundwater. Sustainable extraction is important to prevent depletion.";
+        else if(lower.includes("water pollution")) response = "Groundwater can be polluted by chemicals, sewage, or industrial waste, making it unsafe to drink.";
+
+        appendMessage('bot', response);
+      }, 1000);
     }
 
-    userInput.addEventListener('keypress', (e) => {
-      if(e.key === "Enter") sendMessage();
-    });
-
-    function loadChat(name) {
-      chatMessages.innerHTML = '';
-      const botMsg = document.createElement('div');
-      botMsg.classList.add('message','bot');
-      botMsg.textContent = `${name} loaded. Ask a question about history!`;
-      chatMessages.appendChild(botMsg);
+    function quickQuestion(text) { 
+      userInput.value = text; 
+      sendMessage(); 
     }
+
+    function createNewChat() {
+      let name = prompt("Enter a name for the new chat:");
+      if(!name) name = `Chat ${Object.keys(chats).length + 1}`;
+      if(chats[name]) {
+        alert("A chat with this name already exists!");
+        return;
+      }
+      chats[name] = [];
+      saveChats();
+      loadChat(name);
+    }
+
+    userInput.addEventListener('keypress', (e) => { if(e.key === "Enter") sendMessage(); });
+
+    // Initialize
+    if(!chats[currentChat]) chats[currentChat] = [];
+    loadChat(currentChat);
+    renderHistory();
   </script>
-
 </body>
 </html>
