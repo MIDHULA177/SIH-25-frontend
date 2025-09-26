@@ -74,35 +74,6 @@
 
 
 
-    /* Arrow Navigation */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(204, 221, 243, 0.7);
-      color: white;
-      border: none;
-      font-size: 2rem;/**/
-      padding: 1rem;/**/
-      cursor: pointer;
-      z-index: 10;/**/
-      transition: all 0.3s ease;
-      opacity: 0.5; /* Semi-transparent by default */
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .arrow:hover {
-      background: rgba(208, 220, 236, 0.9);
-      opacity: 1;
-      transform: translateY(-50%) scale(1.1);
-    }
-    .arrow.left { left: 20px; }
-    .arrow.right { right: 20px; }
-    .hero:hover .arrow { opacity: 1; } /* Show arrows on hero hover */
 
     /* Overlay on images */
     .hero::before {
@@ -298,9 +269,6 @@
     </div>
 
 
-    <!-- Arrow Navigation -->
-    <button class="arrow left" id="prevSlide">‹</button>
-    <button class="arrow right" id="nextSlide">›</button>
 
     <div class="hero-content">
       <h1>Puvi Jal</h1>
@@ -337,8 +305,6 @@
   <!-- JavaScript for Slideshow Control -->
   <script>
     const slideshow = document.getElementById('slideshow');
-    const prevBtn = document.getElementById('prevSlide');
-    const nextBtn = document.getElementById('nextSlide');
     const slides = slideshow.querySelectorAll("img");
     const totalSlides = slides.length; // 3
     let currentIndex = 0;
@@ -375,17 +341,6 @@ slides[currentIndex].classList.add("active");
     }
 
     // Event Listeners
-    nextBtn.addEventListener('click', () => {
-      const nextIndex = (currentIndex + 1) % totalSlides;
-      goToSlide(nextIndex);
-      resumeAutoSlide(); // Pause briefly, then resume
-    });
-
-    prevBtn.addEventListener('click', () => {
-      const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Loop to last if at 0
-      goToSlide(prevIndex);
-      resumeAutoSlide(); // Pause briefly, then resume
-    });
 
     // Pause on hero hover
     const hero = document.querySelector('.hero');
@@ -399,5 +354,4 @@ slides[currentIndex].classList.add("active");
 
 </body>
 </html>
-
 
