@@ -1,224 +1,379 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - Puvi Jal</title>
-  
-  <!-- Font Awesome for eye icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
+  <title>Puvi Jal - Groundwater Portal</title>
   <style>
+    /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; }
+    body { font-family: Arial, sans-serif; line-height: 1.6; scroll-behavior: smooth; }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: #1CA9C9;
-      padding: 1rem;
-    }
-
-    .auth-container {
-      background: white;
-      padding: 3rem 2rem;
-      border-radius: 15px;
-      text-align: center;
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
       width: 100%;
-      max-width: 450px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .auth-container h1.logo {
-      font-size: 2rem;
-      color: #004aad;
-      margin-bottom: 0.5rem;
-    }
-
-    .auth-container h2 {
-      margin-bottom: 0.5rem;
-      font-size: 1.5rem;
-      color: #333;
-    }
-
-    .subtitle {
-      color: #666;
-      margin-bottom: 1.5rem;
-    }
-
-    .auth-container input {
-      width: 100%;
-      padding: 0.9rem;
-      margin: 0.6rem 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-
-    .auth-container input:focus {
-      border-color: #007bff;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0,123,255,0.4);
-    }
-
-    .password-container {
-      position: relative;
-    }
-    .toggle-password {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 1.1rem;
-      color: #666;
-    }
-
-    .error {
-      color: red;
-      font-size: 0.85rem;
-      text-align: left;
-      margin-top: -0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .auth-container button {
-      width: 100%;
-      padding: 0.9rem;
-      margin-top: 1rem;
-      font-size: 1.1rem;
       background: #004aad;
       color: white;
-      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+    header .logo { font-size: 1.8rem; font-weight: bold; }
+    header nav { display: flex; }
+    header nav a { 
+      color: white; 
+      text-decoration: none; 
+      margin-left: 1.5rem; 
+      font-weight: bold; 
+      transition: color 0.3s ease;
+    }
+    header nav a:hover { color: #e6e6e6; text-decoration: underline; }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 0rem;
+      margin:0; /* Offset for fixed navbar */
+    }
+
+/**/
+.slideshow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slideshow img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+.slideshow img.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+
+
+
+    /* Overlay on images */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      background: rgba(0,0,70,0.4);
+      z-index: 2;
+    }
+
+    
+
+
+/* Hero Text */
+.hero-content {
+  position: absolute;            /* Center it absolutely */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfect centering */
+  z-index: 2;
+  max-width: 800px;
+  text-align: center;
+  padding-top:60px           /* Center text alignment */
+}
+.hero-content h1 { 
+  font-size: 3rem; 
+  margin-bottom: 1rem; 
+}
+.hero-content p { 
+  font-size: 1.2rem; 
+  margin-bottom: 2rem; 
+}
+.btn {
+  background: white;
+  color: #004aad;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+}
+.btn:hover { 
+  background: #e6e6e6; 
+  box-shadow: 0 0 10px rgba(0,74,173,0.5); 
+}
+
+
+    /* Recommendations Section */
+    .scroll-section {
+      padding: 5rem 2rem;
+      background: #f4f4f4;
+      text-align: center;
+    }
+    .scroll-section h2 { font-size: 2.5rem; margin-bottom: 2rem; color: #004aad; }
+    .scroll-cards {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 1rem 0;
+      scrollbar-width: thin; /* Firefox */
+    }
+    .scroll-cards::-webkit-scrollbar { height: 8px; }
+    .scroll-cards::-webkit-scrollbar-thumb { background: #004aad; border-radius: 4px; }
+   .card {
+    background-color: #e0f7fa;
+    border-radius: 15px;
+    padding: 35px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    cursor: default;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .card h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+  }
+
+  .card p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+    /* Dashboard Section */
+    .dashboard {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: white;
+    }
+    .dashboard h2 { font-size: 2.5rem; margin-bottom: 1rem; color: #004aad; }
+    .dashboard p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .dashboard-img {
+      max-width: 100%;
+      height: auto;
       border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    .auth-container button:hover {
-      background: #003080;
+    /* Footer */
+    footer {
+      background: #004aad;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
     }
 
-    .switch-link {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-    }
-
-    .switch-link a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .switch-link a:hover {
-      text-decoration: underline;
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { 
+        padding: 1rem; 
+        flex-direction: column; 
+        gap: 1rem; 
+      }
+      header nav { 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        gap: 1rem; 
+      }
+      header nav a { margin-left: 0; }
+      .hero { 
+        height: 80vh; 
+        margin-top: 120px; 
+        padding: 0 1rem; 
+      }
+      .slideshow { top: -120px; height: 80vh; }
+      .arrow { 
+        font-size: 1.5rem; 
+        width: 40px; 
+        height: 40px; 
+        padding: 0.5rem; 
+      }
+      .arrow.left { left: 10px; }
+      .arrow.right { right: 10px; }
+      .hero-content h1 { font-size: 2.2rem; }
+      .hero-content p { font-size: 1rem; }
+      .scroll-cards { 
+        flex-direction: column; 
+        align-items: center; 
+        overflow-x: hidden; 
+      }
+      .card { flex: 0 0 auto; width: 80%; }
+      .scroll-section, .dashboard { padding: 2rem 1rem; }
+      .scroll-section h2, .dashboard h2 { font-size: 2rem; }
     }
   </style>
 </head>
-
 <body>
-  <div class="auth-container">
-    <h1 class="logo">Puvi Jal</h1>
-    <h2>Create Account</h2>
-    <p class="subtitle">Join us to explore groundwater insights</p>
-    
-    <form id="signupForm" novalidate>
-      <!-- Full Name -->
-      <input type="text" id="fullname" placeholder="Full Name" required>
-      <div class="error" id="nameError"></div>
 
-      <!-- Email -->
-      <input type="email" id="email" placeholder="Email Address" required>
-      <div class="error" id="emailError"></div>
+  <!-- Navbar -->
+  <header>
+    <div class="logo">Puvi Jal</div>
+    <nav>
+    <a href="index.html">Home</a>
+    <a href="chatbot.html">Chatbot</a>
+    <a href="#recommendations">Recommendations</a>
+    <a href="predictions.html">Predictions</a>
+    <a href="aboutus.html"> About Us</a>
+    <a href="signin.html">Sign In / Sign Up</a> 
 
-      <!-- Password -->
-      <div class="password-container">
-        <input type="password" id="password" placeholder="Password" required>
-        <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('password', this)"></i>
+    </nav>
+  </header>
+
+  <!-- Hero Section with Slideshow and Arrows -->
+  <section class="hero" id="hero">
+    <!-- Slideshow Images - YOUR PROVIDED LINKS INTEGRATED -->
+    <div class="slideshow" id="slideshow">
+      <!-- Slide 1: Water pump for irrigation -->
+      <img src="assets/jimmy-chang-NP8gd2KUnfw-unsplash.jpg" alt="Groundwater pump used for irrigation and water extraction">
+
+      <!-- Slide 2: Shepherd fountain at sunset -->
+      <img src="assets/water_bg2.jpg" alt="Natural water fountain as a groundwater source at sunset">
+
+      <!-- Slide 3: Fresh water background -->
+      <img src="assets/jo-anaya-9L3ZqNtkRw0-unsplash.jpg" alt="Fresh groundwater resources and clean water flow">
+    </div>
+
+
+
+    <div class="hero-content">
+      <h1>Puvi Jal</h1>
+      <p>Real-time groundwater analysis, intelligent queries, and predictive insights.</p>
+      <a href="signin.html" class="btn">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Recommendations / Preferences -->
+  <section class="scroll-section" id="recommendations">
+    <h2>Our Recommendations</h2>
+    <div class="scroll-cards">
+      <div class="card">
+        <h3>Water Conservation Tips</h3>
+        <p>Simple yet powerful ways to save water— from rainwater harvesting to fixing everyday leaks—helping households and communities make a real impact.</p>
       </div>
-      <div class="error" id="passwordError"></div>
-
-      <!-- Confirm Password -->
-      <div class="password-container">
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-        <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('confirmPassword', this)"></i>
-      </div>
-      <div class="error" id="confirmPasswordError"></div>
-
-      <button type="submit">Sign Up</button>
-    </form>
     
-    <p class="switch-link">Already have an account? <a href="signin.html">Sign In</a></p>
-  </div>
+      <div class="card">
+        <h3>Regional Groundwater Trends</h3>
+        <p>See how water levels change across districts with easy-to-read trends, offering clarity on where action is most needed.</p>
+      </div>
+    
+      <div class="card">
+        <h3>Sustainable Agriculture Practices</h3>
+        <p>Farm smarter with eco-friendly methods like crop rotation and soil health monitoring that ease pressure on groundwater.</p>
+      </div>
+    
+      <div class="card">
+        <h3>Future Water Level Predictions</h3>
+        <p>Stay ahead with forecasts that reveal how groundwater levels may shift in the coming years, enabling smarter planning today.</p>
+      </div>
+    
+      <div class="card">
+        <h3>Satellite-Based Data Insights</h3>
+        <p>Tap into cutting-edge satellite monitoring for real-time insights on groundwater reserves and environmental conditions.</p>
+      </div>
+    </div>
+    
+  </section>
 
+  <!-- Dashboard Section -->
+  <section class="dashboard" id="dashboard">
+    <h2>Groundwater Dashboard</h2>
+    <p>Track water levels, monitor regions, and explore AI-powered predictions.</p>
+    <img src="assets/dashboard.jpg" alt="Preview of the interactive groundwater dashboard" class="dashboard-img">
+    <!-- For testing: <img src="https://picsum.photos/800/400?random=4" alt="Preview of the interactive groundwater dashboard" class="dashboard-img"> -->
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    Developed by <b>Neura Coders</b> © 2025
+  </footer>
+
+  <!-- JavaScript for Slideshow Control -->
   <script>
-    const form = document.getElementById("signupForm");
-    const nameInput = document.getElementById("fullname");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const slideshow = document.getElementById('slideshow');
+    const slides = slideshow.querySelectorAll("img");
+    const totalSlides = slides.length; // 3
+    let currentIndex = 0;
+    let autoSlideInterval;
+    const slideInterval = 2000; // 4 seconds per slide (static time)
+    // Initialize first slide visible
+slides[currentIndex].classList.add("active");
 
-    const nameError = document.getElementById("nameError");
-    const emailError = document.getElementById("emailError");
-    const passwordError = document.getElementById("passwordError");
-    const confirmPasswordError = document.getElementById("confirmPasswordError");
+    // Function to go to a specific slide
+    function goToSlide(index) {
+      currentIndex = index;
+      slides.forEach(slide => slide.classList.remove("active"));
+      slides[index].classList.add("active");
 
-    form.addEventListener("submit", function(event) {
-      let valid = true;
-
-      // Name validation
-      if (nameInput.value.trim() === "") {
-        nameError.textContent = "Full name is required";
-        valid = false;
-      } else {
-        nameError.textContent = "";
-      }
-
-      // Email validation
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailPattern.test(emailInput.value.trim())) {
-        emailError.textContent = "Please enter a valid email address";
-        valid = false;
-      } else {
-        emailError.textContent = "";
-      }
-
-      // Password validation
-      const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-      if (!passwordPattern.test(passwordInput.value)) {
-        passwordError.textContent = "Password must be 6+ chars, include 1 uppercase, 1 number & 1 special char";
-        valid = false;
-      } else {
-        passwordError.textContent = "";
-      }
-
-      // Confirm Password validation
-      if (confirmPasswordInput.value !== passwordInput.value || confirmPasswordInput.value === "") {
-        confirmPasswordError.textContent = "Passwords do not match";
-        valid = false;
-      } else {
-        confirmPasswordError.textContent = "";
-      }
-
-      if (!valid) {
-        event.preventDefault();
-      }
-    });
-
-    // Toggle password visibility
-    function togglePassword(fieldId, icon) {
-      const input = document.getElementById(fieldId);
-      if (input.type === "password") {
-        input.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
-      } else {
-        input.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-      }
     }
+
+    // Function to start auto-slide
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides; // Loop to 0 after last
+        goToSlide(currentIndex);
+      }, slideInterval);
+    }
+
+    // Function to pause auto-slide
+    function pauseAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+
+    // Function to resume auto-slide after delay (for manual interaction)
+    function resumeAutoSlide() {
+      pauseAutoSlide();
+      setTimeout(startAutoSlide, slideInterval); // Resume after 4 seconds
+    }
+
+    // Event Listeners
+
+    // Pause on hero hover
+    const hero = document.querySelector('.hero');
+    hero.addEventListener('mouseenter', pauseAutoSlide);
+    hero.addEventListener('mouseleave', startAutoSlide);
+
+    // Initialize
+    goToSlide(currentIndex);
+    startAutoSlide();
   </script>
+
 </body>
 </html>
+
+
