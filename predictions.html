@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Puvi Jal Predictions: AI-powered forecasts for groundwater levels, trends, and sustainable water management. Get insights into future water resources.">
+  <meta name="keywords" content="groundwater predictions, AI forecasts, water levels, sustainability, satellite data, Puvi Jal">
+  <title>Groundwater Predictions - Puvi Jal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Roboto', sans-serif; 
+      line-height: 1.6; 
+      scroll-behavior: smooth; 
+      background: linear-gradient(to bottom, #f0f8ff, #e6f3ff); 
+      color: #333;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(to right, #004aad, #1CA9C9);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+    header.scrolled {
+      background: rgba(0,74,173,0.95);
+      backdrop-filter: blur(10px);
+    }
+    header .logo { 
+      font-size: 2rem; 
+      font-weight: 700; 
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    header .logo i { color: #00BFFF; }
+    header nav { display: flex; }
+    header nav a { 
+      color: white; 
+      text-decoration: none; 
+      margin-left: 1.5rem; 
+      font-weight: 500; 
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+    header nav a:hover { 
+      color: #00BFFF; 
+      background: rgba(255,255,255,0.1);
+      text-decoration: none;
+    }
+    header nav a.active { 
+      background: rgba(255,255,255,0.2); 
+      color: #00BFFF;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      margin-top: 0;
+      background: linear-gradient(rgba(0,74,173,0.8), rgba(28,169,201,0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="wave" width="100" height="20" patternUnits="userSpaceOnUse"><path d="M0 10 Q25 0 50 10 T100 10" stroke="none" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23wave)"/></svg>') repeat;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,70,0.6), rgba(0,0,70,0.3));
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      text-align: center;
+      padding: 0 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content h1 { 
+      font-size: 3.5rem; 
+      margin-bottom: 1rem; 
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .hero-content p { 
+      font-size: 1.3rem; 
+      margin-bottom: 2rem; 
+      font-weight: 300;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    .btn {
+      background: linear-gradient(to right, #004aad, #1CA9C9);
+      color: white;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      border: none;
+    }
+    .btn:hover { 
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Common Section Styles */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section h2 { 
+      font-size: 2.8rem; 
+      margin-bottom: 1rem; 
+      color: #004aad;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+    .section h2 i { color: #1CA9C9; font-size: 2rem; }
+    .section p { 
+      font-size: 1.3rem; 
+      margin-bottom: 3rem; 
+      max-width: 700px; 
+      margin-left: auto; 
+      margin-right: auto; 
+      font-weight: 300;
+    }
+
+    /* Predictions Intro Section */
+    .intro-section {
+      background: #f8f9ff;
+    }
+    .intro-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .intro-text ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+    .intro-text ul li {
+      padding: 0.8rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .intro-text ul li i { color: #00BFFF; }
+    .intro-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .intro-img:hover {
+      transform: scale(1.02);
+    }
+    @media (max-width: 768px) {
+      .intro-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .intro-text {
+        text-align: center;
+      }
+    }
+
+    /* AI Technology Section */
+    .tech-section {
+      background: white;
+      position: relative;
+    }
+    .tech-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M0 0h10v10H0z" stroke="#f0f8ff" opacity="0.1" fill="none"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>') repeat;
+      z-index: -1;
+    }
+    .tech-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .tech-card {
+      background: #f8f9ff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
+    .tech-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, #004aad, #1CA9C9);
+    }
+    .tech-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    .tech-card i {
+      font-size: 2.5rem;
+      color: #1CA9C9;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .tech-card h3 {
+      margin: 0 0 1rem 0;
+      font-size: 1.4rem;
+      color: #004aad;
+    }
+    .tech-card p {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    /* Sample Predictions Section */
+    .samples-section {
+      background: #f8f9ff;
+    }
+    .sample-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .sample-item {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .sample-item i {
+      font-size: 3rem;
+      color: #00BFFF;
+      margin-bottom: 1rem;
+    }
+    .sample-item h3 {
+      color: #004aad;
+      margin-bottom: 0.5rem;
+    }
+    .sample-item p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+    .mock-chart {
+      background: #e3f2fd;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #004aad;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      background: white;
+    }
+    .benefits-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .benefit-item {
+      padding: 1.5rem;
+      border-left: 4px solid #1CA9C9;
+      background: #f8f9ff;
+      border-radius: 0 12px 12px 0;
+      text-align: left;
+    }
+    .benefit-item i {
+      font-size: 1.5rem;
+      color: #1CA9C9;
+      margin-right: 1rem;
+    }
+    .benefit-item h3 {
+      color: #004aad;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, #004aad, #1CA9C9);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 1rem;
+      margin-top: 3rem;
+    }
+    footer p { 
+      margin-bottom: 0.5rem; 
+      font-weight: 300;
+    }
+    footer .credits {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1rem;
+      font-weight: 500;
+    }
+    footer .credits strong {
+      color: #00BFFF;
+    }
+    footer a { 
+      color: #00BFFF; 
+      text-decoration: none; 
+      transition: color 0.3s ease;
+    }
+    footer a:hover { color: white; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { 
+        padding: 1rem; 
+        flex-direction: column; 
+        gap: 1rem; 
+      }
+      header nav { 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        gap: 1rem; 
+      }
+      header nav a { margin-left: 0; padding: 0.5rem; }
+      .hero { height: 80vh; }
+      .hero-content h1 { font-size: 2.5rem; }
+      .hero-content p { font-size: 1.1rem; }
+      .section { padding: 3rem 1rem; }
+      .section h2 { font-size: 2.2rem; }
+      footer { padding: 1.5rem 1rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-content h1 { font-size: 2rem; }
+      .hero-content p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="navbar">
+    <div class="logo">
+      <i class="fas fa-tint"></i>
+      Puvi Jal
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="chatbot.html">Chatbot</a>
+      <a href="#recommendations">Recommendations</a>
+      <a href="predictions.html" class="active">Predictions</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="signin.html">Sign In / Sign Up</a> 
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>AI-Powered Groundwater Predictions</h1>
+      <p>Forecast future water levels with precision using satellite data, machine learning, and environmental insights for proactive water management.</p>
+      <a href="signin.html" class="btn">Explore Predictions <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
+
+  <!-- Introduction to Predictions -->
+  <section class="section intro-section">
+    <h2><i class="fas fa-crystal-ball"></i>What are Groundwater Predictions?</h2>
+    <p>Leverage advanced AI to anticipate groundwater trends, helping communities and policymakers make informed decisions for sustainable resource use.</p>
+    <div class="intro-content">
+      <div class="intro-text">
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Predict water level changes up to 12 months ahead</li>
+          <li><i class="fas fa-check-circle"></i> Analyze regional risks from climate and usage patterns</li>
+          <li><i class="fas fa-check-circle"></i> Integrate satellite and historical data for accuracy</li>
+          <li><i class="fas fa-check-circle"></i> Provide actionable insights for agriculture and urban planning</li>
+        </ul>
+      </div>
+      <img src="assets/prediction-chart.jpg" alt="Sample groundwater prediction chart" class="intro-img">
+      <!-- Placeholder: Replace with actual image -->
+    </div>
+  </section>
+
+  <!-- AI Technology Section -->
+  <section class="section tech-section">
+    <h2><i class="fas fa-brain"></i>Our AI Technology</h2>
+    <p>Powered by cutting-edge machine learning models trained on vast datasets from satellites, weather stations, and historical records.</p>
+    <div class="tech-cards">
+      <div class="tech-card">
+        <i class="fas fa-satellite"></i>
+        <h3>Satellite Data Integration</h3>
+        <p>Utilize GRACE satellite measurements to monitor underground water storage changes with high precision across global regions.</p>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Machine Learning Models</h3>
+        <p>Employ LSTM neural networks and ensemble methods to forecast trends, accounting for variables like rainfall, extraction rates, and soil moisture.</p>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-cloud-sun"></i>
+        <h3>Climate Pattern Analysis</h3>
+        <p>Incorporate weather forecasts and climate models to predict seasonal impacts on groundwater recharge and depletion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sample Predictions Section -->
+  <section class="section samples-section">
+    <h2><i class="fas fa-eye"></i>Sample Predictions</h2>
+    <p>View interactive forecasts for key regions—sign in to access personalized data and visualizations.</p>
+    <div class="sample-grid">
+      <div class="sample-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <h3>Tamil Nadu Region</h3>
+        <p>Expected 15% decline in Q1 2025 due to monsoon variability.</p>
+        <div class="mock-chart">
+          <strong>Trend:</strong> ↓ Declining<br>
+          <strong>Confidence:</strong> 85%<br>
+          <strong>Next
