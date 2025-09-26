@@ -5,6 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Puvi Jal - Groundwater Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Waterfall&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Waterfall&display=swap" rel="stylesheet">
   <style>
     /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,10 +18,11 @@
 
     /* Navbar */
     header {
+      font-family: "Nunito Sans", sans-serif;
       position: fixed;
       top: 0;
       width: 100%;
-      background: #004aad;
+      background: linear-gradient(to right, #004aad, #1CA9C9);
       color: white;
       display: flex;
       justify-content: space-between;
@@ -24,7 +31,8 @@
       z-index: 1000;
     }
     header .logo { 
-      font-size: 2rem; 
+      font-family: "Waterfall", cursive;
+      font-size: 2.5rem; 
       font-weight: 700; 
       display: flex;
       align-items: center;
@@ -36,14 +44,25 @@
   margin-right: 5px; /* Add some space between the image and the text */
 }
     header nav { display: flex; }
-    header nav a { 
+    header nav a {
+      font-family: "Nunito Sans", sans-serif; 
       color: white; 
       text-decoration: none; 
       margin-left: 1.5rem; 
       font-weight: bold; 
       transition: color 0.3s ease;
+      padding: 0.5rem 1rem; /* ADDED */
+  border-radius: 5px;
     }
-    header nav a:hover { color: #e6e6e6; text-decoration: underline; }
+    header nav a:hover { 
+  color: #edf0f2; /* Light text color on hover */
+  background: rgba(144, 229, 248, 0.681); /* Light blue background */
+  text-decoration: none; /
+}
+    header nav a.active { 
+      background: rgb(96, 205, 238); 
+      color: #e1e9ec;
+    }
 
     /* Hero Section */
     .hero {
@@ -112,14 +131,17 @@
   padding-top:60px           /* Center text alignment */
 }
 .hero-content h1 { 
-  font-size: 3rem; 
+  font-family: "Waterfall", cursive;
+  font-size: 7rem; 
   margin-bottom: 1rem; 
 }
 .hero-content p { 
+  font-family: "Nunito Sans", sans-serif;
   font-size: 1.2rem; 
   margin-bottom: 2rem; 
 }
 .btn {
+  font-family: "Nunito Sans", sans-serif;
   background: white;
   color: #004aad;
   padding: 0.8rem 2rem;
@@ -142,8 +164,9 @@
       background: #f4f4f4;
       text-align: center;
     }
-    .scroll-section h2 { font-size: 2.5rem; margin-bottom: 2rem; color: #004aad; }
+    .scroll-section h2 { font-family: "Nunito Sans", sans-serif;font-size: 2.5rem; margin-bottom: 2rem; color: #004aad; }
     .scroll-cards {
+      
       display: flex;
       overflow-x: auto;
       gap: 1rem;
@@ -153,6 +176,7 @@
     .scroll-cards::-webkit-scrollbar { height: 8px; }
     .scroll-cards::-webkit-scrollbar-thumb { background: #004aad; border-radius: 4px; }
    .card {
+    font-family: "Nunito Sans", sans-serif;
     background-color: #e0f7fa;
     border-radius: 15px;
     padding: 35px;
@@ -177,6 +201,7 @@
   }
 
   .card h3 {
+    font-family: "Nunito Sans", sans-serif;
     margin: 0 0 10px 0;
     font-size: 18px;
   }
@@ -188,6 +213,7 @@
 
     /* Dashboard Section */
     .dashboard {
+      font-family: "Nunito Sans", sans-serif;
       padding: 4rem 2rem;
       text-align: center;
       background: white;
@@ -203,6 +229,7 @@
 
     /* Footer */
     footer {
+      font-family: "Nunito Sans", sans-serif;
       background: #004aad;
       color: white;
       text-align: center;
